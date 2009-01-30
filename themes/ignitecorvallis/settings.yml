@@ -4,7 +4,7 @@ organization: 'Ignite Corvalls'
 # Breadcrumbs that are always visible, each breadcrumb is a name and URI:
 breadcrumbs:
   - ['Ignite Corvallis', 'http://www.corvallis.com/']
-  - ['Proposals', '/proposals/']
+#  - ['Proposals', '/proposals/']
 
 # Timezone for dates in this application:
 timezone: 'Pacific Time (US & Canada)'
