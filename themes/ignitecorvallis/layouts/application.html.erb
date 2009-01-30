@@ -2,26 +2,29 @@
 <html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
   <script type="text/javascript">(function() { var a=window;function b(){this.t={};this.tick=function(e,f){this.t[e]=[(new Date).getTime(),f]};this.tick("start")}var c=new b;a.jstiming={Timer:b,load:c};if(a.external&&a.external.pageT)a.jstiming.pt=a.external.pageT;var d=false;function g(){if(!d){d=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",g,false):a.attachEvent("onscroll",g); })();</script>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
   <meta content='true' name='MSSmartTagsPreventParsing'/>
   <meta content='blogger' name='generator'/>
-  <link href='http://www.blogger.com/favicon.ico' rel='icon' type='image/vnd.microsoft.icon'/>
-  <link rel="alternate" type="application/atom+xml" title="Ignite Corvallis - Atom" href="http://ignitecorvallis.com/feeds/posts/default" />
-  <link rel="alternate" type="application/rss+xml" title="Ignite Corvallis - RSS" href="http://ignitecorvallis.com/feeds/posts/default?alt=rss" />
-  <link rel="service.post" type="application/atom+xml" title="Ignite Corvallis - Atom" href="http://www.blogger.com/feeds/7246667325625199617/posts/default" />
-  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=7246667325625199617" />
-  <link rel="openid.server" href="http://www.blogger.com/openid-server.g" />
+  <title><%= SETTINGS.organization %>: <%= page_title %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <meta name="description" content="Share Burning Ideas" />
 
-  <title>Ignite Corvallis</title>
+  <%= auto_discovery_link_tag(:atom, proposals_feed_path, :title => "#{SETTINGS.organization}: Proposals feed") %>
+  <% if admin? %>
+    <%= auto_discovery_link_tag(:atom, comments_feed_path(:secret => CommentsController::SECRET), :title => "#{SETTINGS.organization}: Proposals comments feed") %>
+  <% end %>
 
-  <link type='text/css' rel='stylesheet' href='http://www.blogger.com/widgets/3825235830-widget_css_bundle.css' /> <link rel="stylesheet" type="text/css" href="http://www.blogger.com/v-css/3727950723-blog_controls.css"/>
-  <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=7246667325625199617&zx=0c8e353b-24b4-451a-836e-0a5840034e44"/>
-  <link href="../stylesheets/blogger.css" media="screen" rel="Stylesheet" type="text/css" />
+  <%= theme_stylesheet_link_tag "blogger" %>
+  <%= stylesheet_link_tag "common" %>
+  <%= theme_stylesheet_link_tag "custom" %>
+
+  <!--<link type='text/css' rel='stylesheet' href='http://www.blogger.com/widgets/3825235830-widget_css_bundle.css' /> <link rel="stylesheet" type="text/css" href="http://www.blogger.com/v-css/3727950723-blog_controls.css"/>
+  <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=7246667325625199617&zx=0c8e353b-24b4-451a-836e-0a5840034e44"/> -->
   <style type="text/css">#navbar-iframe { display:block }
   </style>
 
 </head>
 <body>
+
 <div class='navbar section' id='navbar'>
   <div class='widget Navbar' id='Navbar1'>
     <script type="text/javascript">
@@ -71,7 +74,45 @@
     <div class='crosscol section' id='crosscol'></div>
   </div>
   <div id='main-wrapper'>
-    <div class='main section' id='main'><div class='widget Blog' id='Blog1'>
+    <div class="content">
+      <div id="primary-wrapper">
+        <div id="primary">
+          <div id="notices"></div><a name="startcontent" id="startcontent"></a>
+
+          <div id="dynamic-content">
+
+            <div id="breadcrumbs">
+              <% if @breadcrumbs %>
+                <% @breadcrumbs.each_with_index do |breadcrumb, i| %>
+                  <% txt, path = breadcrumb %>
+                  <% if i > 0 %>
+                    &#187;
+                  <% end %>
+                  <%= link_to(h(txt), path) %>
+                <% end %>
+              <% end %>
+            </div>
+
+            <div id="rollingcontent" class="hfeed">
+              <div class="hentry post publish alt">
+                <div class="entry-head">
+                  <h3 class="entry-title"><%= page_title %></h3>
+                </div>
+                <div class="entry-content">
+                  <%# flash[:success] = "This test is for testing the notifications." %>
+                  <%# flash[:failure] = "This test is for testing the notifications." %>
+                  <%# flash[:notice] = "This test is for testing the notifications." %>
+                  <%= notice %>
+                  <%= yield %>
+                </div>
+              </div>
+            </div><!-- #rollingcontent .hfeed -->
+          </div><!-- #dynamic-content -->
+        </div><!-- #primary -->
+      </div><!-- #primary-wrapper -->
+    </div>
+
+<!--    <div class='main section' id='main'><div class='widget Blog' id='Blog1'>
       <div class='blog-posts hfeed'>
         <!-- google_ad_section_start -->
         <div class='post hentry uncustomized-post-template'>
@@ -82,12 +123,58 @@
         <!-- google_ad_section_end -->
       </div>
     </div>
-  </div>
+  </div>-->
 </div>
 <div id='sidebar-wrapper'>
   <div class='sidebar section' id='sidebar'>
     <div class='widget Feed' id='Feed2'>
-      <h2>Login as</h2>
+        <div id="login-as" class="hoverable widget module module1 sb-login alt">
+          <% if logged_in? %>
+            <h4>Logged in as</h4>
+              <li><b><%= current_user.label %></b></li>
+              <% if admin? %>
+                <li><%= link_to "Manage events", manage_events_path %></li>
+                <li><%= link_to "Manage snippets", manage_snippets_path %></li>
+                <li><%= link_to "Manage comments", comments_path %></li>
+                <% if @event %>
+                  <li><%= link_to "Export CSV", "/events/#{@event.id}/proposals.csv" %></li>
+                <% end %>
+              <% end %>
+              <li><%= link_to "Logout", logout_path, :method => :delete %></li>
+            </ul>
+          <% else %>
+            <h4>Login as</h4>
+            <ul>
+              <li><%= link_to "<b>User</b> to manage your proposals", login_path %></li>
+              <li><%= link_to "<b>Admin</b> to manage site", admin_path %></li>
+            </ul>
+          <% end %>
+        </div>
+
+        <div id="subscribe-to" class="hoverable widget module module1 sb-subscribe alt">
+          <h4>Subscribe to</h4>
+          <ul>
+            <li><%= link_to "Proposals feed <span class='feedable' />", proposals_feed_path %></li>
+            <% if admin? %>
+              <li><%= link_to "Comments feed <span class='feedable' />", comments_feed_path(:secret => CommentsController::SECRET) %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div id="proposals-for" class="hoverable widget module module1 sb-proposals alt">
+          <h4>Proposals for</h4>
+          <ul>
+            <% if @events.blank? %>
+              <li class="empty-text">&mdash; No events &mdash;</li>
+            <% else %>
+              <% for event in @events %>
+                <li><%= link_to event.title, event_proposals_path(event) %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+
+<!--      <h2>Login as</h2>
         <div class='widget-content'>
           <ul id='Feed2_feedItemListDisplay'>
             <li>
@@ -98,7 +185,7 @@
           </ul>
         </div>
         <div class='widget Feed' id='Feed1'>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -110,6 +197,10 @@
 <a href='http://ignitecorvallis.com/'>Ignite Corvallis</a> &#169; 2008 | Design Customized by <a href='http://www.proworks.com'>ProWorks</a>
 </div>
 </div></div>
+  <!-- arbitrary javascript from views -->
+  <script type="text/javascript">
+    <%= yield :javascript %>
+  </script>
 <!-- end outer-wrapper -->
 </body>
 </html>
