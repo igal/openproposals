@@ -130,7 +130,7 @@
     <div class='widget Feed' id='Feed2'>
         <div id="login-as" class="hoverable widget module module1 sb-login alt">
           <% if logged_in? %>
-            <h4>Logged in as</h4>
+            <h2>Logged in as</h2>
               <li><b><%= current_user.label %></b></li>
               <% if admin? %>
                 <li><%= link_to "Manage events", manage_events_path %></li>
@@ -143,7 +143,7 @@
               <li><%= link_to "Logout", logout_path, :method => :delete %></li>
             </ul>
           <% else %>
-            <h4>Login as</h4>
+            <h2>Login as</h2>
             <ul>
               <li><%= link_to "<b>User</b> to manage your proposals", login_path %></li>
               <li><%= link_to "<b>Admin</b> to manage site", admin_path %></li>
@@ -152,7 +152,7 @@
         </div>
 
         <div id="subscribe-to" class="hoverable widget module module1 sb-subscribe alt">
-          <h4>Subscribe to</h4>
+          <h2>Subscribe to</h2>
           <ul>
             <li><%= link_to "Proposals feed <span class='feedable' />", proposals_feed_path %></li>
             <% if admin? %>
@@ -162,7 +162,7 @@
         </div>
 
         <div id="proposals-for" class="hoverable widget module module1 sb-proposals alt">
-          <h4>Proposals for</h4>
+          <h2>Proposals for</h2>
           <ul>
             <% if @events.blank? %>
               <li class="empty-text">&mdash; No events &mdash;</li>
