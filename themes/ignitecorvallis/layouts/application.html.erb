@@ -17,11 +17,6 @@
   <%= stylesheet_link_tag "common" %>
   <%= theme_stylesheet_link_tag "custom" %>
 
-  <!--<link type='text/css' rel='stylesheet' href='http://www.blogger.com/widgets/3825235830-widget_css_bundle.css' /> <link rel="stylesheet" type="text/css" href="http://www.blogger.com/v-css/3727950723-blog_controls.css"/>
-  <link rel="stylesheet" type="text/css" href="http://www.blogger.com/dyn-css/authorization.css?targetBlogID=7246667325625199617&zx=0c8e353b-24b4-451a-836e-0a5840034e44"/> -->
-  <style type="text/css">#navbar-iframe { display:block }
-  </style>
-
 </head>
 <body>
 
@@ -64,7 +59,7 @@
       <ul>
       <li><a href='http://ignitecorvallis.com/2008/10/what-is-ignite.html'>About</a></li>
       <li><a href='http://ignitecorvallis.com/search/label/video%20examples'>Presentations</a></li>
-      <li><a href='#'>Submit</a></li>
+      <li><a href='/proposals'>Proposals</a></li>
       <li><a href='http://ignitecorvallis.com/feeds/posts/default'>Posts RSS</a></li>
       </ul>
   </div>
@@ -129,9 +124,10 @@
   <div class='sidebar section' id='sidebar'>
     <div class='widget Feed' id='Feed2'>
         <div id="login-as" class="hoverable widget module module1 sb-login alt">
-          <% if logged_in? %>
-            <h2>Logged in as</h2>
-              <li><b><%= current_user.label %></b></li>
+          <h2>Welcome</h2>
+          <ul>
+            <% if logged_in? %>
+              <li><%= current_user.email || current_user.label %></li>
               <% if admin? %>
                 <li><%= link_to "Manage events", manage_events_path %></li>
                 <li><%= link_to "Manage snippets", manage_snippets_path %></li>
@@ -139,16 +135,23 @@
                 <% if @event %>
                   <li><%= link_to "Export CSV", "/events/#{@event.id}/proposals.csv" %></li>
                 <% end %>
+              <% else %>
+                <% if @event.ergo.accepting_proposals? %>
+                  <li>
+                    <%= link_to "Submit a proposal <span class='addable' />", new_event_proposal_path(@event) %>
+                  </li>
+                <% end %>
               <% end %>
               <li><%= link_to "Logout", logout_path, :method => :delete %></li>
-            </ul>
-          <% else %>
-            <h2>Login as</h2>
-            <ul>
-              <li><%= link_to "<b>User</b> to manage your proposals", login_path %></li>
-              <li><%= link_to "<b>Admin</b> to manage site", admin_path %></li>
-            </ul>
-          <% end %>
+            <% else %>
+              <li><%= link_to "Login to manage your proposals", login_path %></li>
+              <% if @event.ergo.accepting_proposals? %>
+                <li>
+                  <%= link_to "Submit a proposal <span class='addable' />", new_event_proposal_path(@event) %>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
         </div>
 
         <div id="subscribe-to" class="hoverable widget module module1 sb-subscribe alt">
@@ -194,7 +197,7 @@
 <!-- end content-wrapper -->
 <div id='footer-wrapper'>
 <div class='footer section' id='footer'></div>
-<a href='http://ignitecorvallis.com/'>Ignite Corvallis</a> &#169; 2009 | Design Customized by <a href='http://www.proworks.com'>ProWorks</a>
+<a href='http://ignitecorvallis.com/'>Ignite Corvallis</a> &#169; 2009 | Design Customized by <a href='http://www.proworks.com'>ProWorks</a> | <%= link_to "Manage site", admin_path %>
 </div>
 </div></div>
   <!-- arbitrary javascript from views -->
