@@ -1,0 +1,385 @@
+/*
+-----------------------------------------------
+Blogger Template Style
+Name: Mr. Techie
+Author: FreeCssTemplates
+URL: http://www.freecsstemplates.org
+Converted to Blogger By: Dafool
+URL: http://freshbloggertemplates.blogspot.com
+----------------------------------------------- */
+/* Variable definitions
+====================
+<Variable name="bgcolor" description="Page Background Color"
+type="color" default="#fff">
+<Variable name="textcolor" description="Text Color"
+type="color" default="#333">
+<Variable name="linkcolor" description="Link Color"
+type="color" default="#58a">
+<Variable name="linkhover" description="Link Hover Color"
+type="color" default="#333">
+<Variable name="pagetitlecolor" description="Blog Title Color"
+type="color" default="#666">
+<Variable name="descriptioncolor" description="Blog Description Color"
+type="color" default="#999">
+<Variable name="titlecolor" description="Post Title Color"
+type="color" default="#c60">
+<Variable name="bordercolor" description="Border Color"
+type="color" default="#ccc">
+<Variable name="sidebarcolor" description="Sidebar Title Color"
+type="color" default="#999">
+<Variable name="sidebartextcolor" description="Sidebar Text Color"
+type="color" default="#666">
+<Variable name="visitedlinkcolor" description="Visited Link Color"
+type="color" default="#999">
+<Variable name="bodyfont" description="Text Font"
+type="font" default="normal normal 100% Georgia, Serif">
+<Variable name="headerfont" description="Sidebar Title Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif">
+<Variable name="pagetitlefont" description="Blog Title Font"
+type="font"
+default="normal normal 200% Georgia, Serif">
+<Variable name="descriptionfont" description="Blog Description Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif">
+<Variable name="postfooterfont" description="Post Footer Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif">
+*/
+/* Use this with templates/template-twocol.html */
+body {
+background:#ffffff;
+margin:0;
+color:#7F7772;
+font-size/* */:/**/small;
+font-size: /**/small;
+text-align: left;
+padding: 0;
+font: 13px "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+a:link {
+color:#990033;
+text-decoration:none;
+}
+a:visited {
+color:#990033;
+text-decoration:none;
+}
+a:hover {
+color:#FF7400;
+text-decoration:underline;
+}
+a img {
+border-width:0;
+}
+/*Hide Navbar*/
+#navbar-iframe {
+height:0px;
+visibility:hidden;
+display:none;
+}
+/* Header
+-----------------------------------------------
+*/
+#header-wrapper {
+width:950px;
+margin:0 auto 10px;
+}
+#header-inner {
+background-position: center;
+margin:0;
+}
+#header {
+text-align: left;
+color:#3B3B3B;
+}
+#header h1 {
+margin:0;
+font: normal normal 200% Georgia, Serif;
+height: 108px;
+width: 300px;
+padding: 0px 90px 0 0;
+margin:0 0 0 10px;
+font-weight: bold;
+}
+#header a {
+color:#3B3B3B;
+text-decoration:none;
+}
+#header a:hover {
+color:#3B3B3B;
+}
+#header .description {
+max-width:950px;
+font: Georgia;
+color: #3B3B3B;
+margin: -10px 0 10px 345px;
+padding: 0px 0 0 0;
+line-height: normal;
+letter-spacing: -1px;
+font-size: 1.6em;
+font-weight: normal;
+}
+#header img {
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 0px;
+}
+/* Top Menu
+----------------------------------------------- */
+#menu {
+width: 950px;
+height: 60px;
+margin: 0 auto;
+background: #FFFFFF url(http://img140.imageshack.us/img140/9630/menuignitenv6.jpg);
+background-repeat: no-repeat;
+}
+#menu ul {
+margin: 0;
+padding: 0;
+list-style: none;
+}
+#menu li {
+display: inline;
+}
+#menu a {
+display: block;
+float: left;
+padding: 14px 30px 0 30px;
+text-decoration: none;
+font-size: 1.6em;
+font-weight: bold;
+color: #FFFFFF;
+}
+#menu a:hover {
+text-decoration: none;
+color: #DF0021;
+}
+#menu .current_page_item {
+}
+#menu .current_page_item a {
+color: #000000;
+}
+/* Outer-Wrapper
+----------------------------------------------- */
+#outer-wrapper {
+width: 950px;
+margin:0 auto;
+padding:10px;
+text-align:left;
+font: normal normal 100% Georgia, Serif;
+}
+#main-wrapper {
+width: 600px;
+float: left;
+padding: 20px 0 0 40px;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar-wrapper {
+width: 262px;
+float: left;
+padding:0 0 0 40px;
+margin-bottom:10px;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;      /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar-wrapper2 {
+width: 160px;
+float:left;
+padding: 30px 0 0 20px;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;      /* fix for long non-text content breaking IE sidebar float */
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+margin:1.5em 0 .75em;
+font:normal normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif;
+line-height: 1.4em;
+letter-spacing:.2em;
+color:#999999;
+}
+/* Posts
+-----------------------------------------------
+*/
+h2.date-header {
+margin:0 0 .5em;
+}
+.fn {text-decoration:underline;}
+.post {
+padding-bottom:40px;
+}
+.post h3 {
+margin:.25em 0 0;
+padding:0 0 4px;
+font-size:2.2em;
+font-weight:normal;
+line-height:1.0em;
+color:#990033;
+}
+.post h3 a, .post h3 a:visited, .post h3 strong {
+display:block;
+text-decoration:none;
+color:#990033;
+color:#FF7D09;
+font-weight:normal;
+}
+.post h3 strong, .post h3 a:hover {
+color:#FF7400;
+}
+.post p {
+margin:0 0 ;
+line-height:1.6em;
+font-size:1.2em;
+}
+.post-footer {
+margin-top:20px;
+background:url(http://img509.imageshack.us/img509/995/postfooteroe6.png) top left no-repeat;
+width: 570px;
+height: 29px;
+padding: 7px 0 0 45px;
+color: #999999;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+font-size:10px;
+border-bottom:0px solid #DF0021;
+}
+.author-header{font-size:80%;margin:0 0 15px 0;}
+.comment-link {
+}
+.post img {
+padding:4px;
+border:1px solid #cccccc;
+}
+.post blockquote {
+margin:1em 20px;
+}
+.post blockquote p {
+margin:.75em 0;
+}
+/* Comments
+----------------------------------------------- */
+#comments h4 {
+margin:1em 0;
+font-weight: bold;
+line-height: 1.4em;
+color: #999999;
+}
+#comments-block {
+margin:1em 0 1.5em;
+line-height:1.6em;
+}
+#comments-block .comment-author {
+margin:.5em 0;
+}
+#comments-block .comment-body {
+margin:.25em 0 0;
+}
+#comments-block .comment-footer {
+margin:-.25em 0 2em;
+line-height: 1.4em;
+letter-spacing:.1em;
+}
+#comments-block .comment-body p {
+margin:0 0 .75em;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+#blog-pager-newer-link {
+float: left;
+}
+#blog-pager-older-link {
+float: right;
+}
+#blog-pager {
+text-align: center;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+/* Sidebar Content
+----------------------------------------------- */
+.sidebar h2{
+background:#FFFFFF url(http://img232.imageshack.us/img232/9379/subheaderigniteal2.jpg) top left no-repeat;
+width: 262px;
+height: 41px;
+padding: 7px 0 0 10px;
+letter-spacing: 0px;
+font-size: 1.4em;
+color: #FFFFFF;
+margin-bottom:10px;}
+.sidebar {
+color: #666666;
+line-height: 1.5em;
+bottom left no-repeat;
+margin:0 0 5px 0;
+font-family: 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 0;
+padding:0 0 0;
+}
+.sidebar li {
+line-height:1.5em;
+padding:0 0 0 5px;
+}
+.sidebar .widget, .main .widget {
+margin:0 0 1.5em;
+padding:0 0 0em;
+}
+.sidebar .widget{margin-bottom: 1em;
+}
+.sidebar .widget-content {margin: 0 20px;padding-bottom:0px;}
+.main .Blog {
+border-bottom-width: 0;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin: 0 5px 5px 0;
+padding: 4px;
+border: 1px solid #cccccc;
+}
+.profile-data {
+margin:0;
+text-transform:uppercase;
+letter-spacing:.1em;
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+color: #999999;
+font-weight: bold;
+line-height: 1.6em;
+}
+.profile-datablock {
+margin:.5em 0 .5em;
+}
+.profile-textblock {
+margin: 0.5em 0;
+line-height: 1.6em;
+}
+.profile-link {
+font: normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+text-transform: uppercase;
+letter-spacing: .1em;
+}
+/* Footer
+----------------------------------------------- */
+#footer {
+width:950px;
+clear:both;
+margin:0 auto;
+line-height: 1.6em;
+font-size: .9em;
+text-align: center;
+padding: 30px 0;
+}
+/** Page structure tweaks for layout editor wireframe */
+body#layout #header {
+margin-left: 0px;
+margin-right: 0px;
+}
