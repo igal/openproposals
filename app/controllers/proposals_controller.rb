@@ -22,7 +22,7 @@ class ProposalsController < ApplicationController
 
     respond_to do |format|
       format.html {
-        add_breadcrumb @event.title, event_proposals_path(@event)
+        add_breadcrumb_for_event
       }
       format.xml  {
         render :xml => @proposals.map(&:public_attributes)
@@ -67,7 +67,6 @@ class ProposalsController < ApplicationController
   def show
     # @proposal and @event set via #assign_proposal_and_event filter
 
-    add_breadcrumb @event.title, event_proposals_path(@event)
     add_breadcrumb @proposal.title, proposal_path(@proposal)
 
     @comment = Comment.new(:proposal => @proposal, :email => current_email)
@@ -84,8 +83,7 @@ class ProposalsController < ApplicationController
   # GET /proposals/new
   # GET /proposals/new.xml
   def new
-    add_breadcrumb @event.title, event_proposals_path(@event)
-    add_breadcrumb "Create a proposal", new_event_proposal_path
+    add_breadcrumb "Create a proposal", new_event_proposal_path(@event)
 
     @proposal = Proposal.new
     if logged_in?
@@ -105,7 +103,6 @@ class ProposalsController < ApplicationController
     # @proposal set via #assign_proposal filter
 
     @event = @proposal.event
-    add_breadcrumb @event.title, event_proposals_path(@event)
     add_breadcrumb @proposal.title, proposal_path(@proposal)
   end
 
@@ -141,7 +138,6 @@ class ProposalsController < ApplicationController
   def update
     # @proposal and @event set via #assign_proposal_and_event filter
 
-    add_breadcrumb @event.title, event_proposals_path(@event)
     add_breadcrumb @proposal.title, proposal_path(@proposal)
 
     respond_to do |format|
@@ -218,7 +214,11 @@ protected
   end
 
   def assign_proposals_breadcrumb
-    add_breadcrumb "Proposals", proposals_path
+    add_breadcrumb_for_event
+  end
+
+  def add_breadcrumb_for_event
+    add_breadcrumb "#{@event.title} proposals", event_proposals_path(@event) if @event
   end
 
 end

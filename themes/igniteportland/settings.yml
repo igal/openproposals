@@ -4,7 +4,6 @@ organization: 'Ignite Portland'
 # Breadcrumbs that are always visible, each breadcrumb is a name and URI:
 breadcrumbs:
   - ['Ignite Portland', 'http://www.igniteportland.com/']
-  - ['Proposals', '/proposals/']
 
 # Timezone for dates in this application:
 timezone: 'Pacific Time (US & Canada)'
