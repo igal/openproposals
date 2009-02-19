@@ -278,7 +278,7 @@ div.record-controls {
 /*---[ submit a talk button ]-----------------------------------------*/
 
 /* FIXME how to automatically size width of the box? */
-#submit-a-talk {background: #FFFFFF; margin:1px; width: 13em; font-size: 1.1em; }
+#submit-a-talk {background: #FFFFFF; margin:1px; width: 15em; font-size: 1.1em; }
   .rnd_top, .rnd_bottom {display:block; background:#FFFFFF; font-size:1px;}
   .rnd_b1, .rnd_b2, .rnd_b3, .rnd_b4 {display:block; overflow:hidden;}
   .rnd_b1, .rnd_b2, .rnd_b3 {height:1px;}
