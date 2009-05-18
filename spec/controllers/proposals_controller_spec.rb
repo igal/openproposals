@@ -407,4 +407,20 @@ describe ProposalsController, "when displaying events" do
       lambda { get :br3ak }.should raise_error
     end
   end
+
+  describe "index_cache_key_for" do
+    it "should emit for events and their proposal accepting status" do
+      event = mock_model(Event, :id => 1, :accepting_proposals? => true)
+
+      @controller.send(:index_cache_key_for, event, true).should == "proposals_index,event_1,accepting_true,admin_true"
+    end
+
+    it "should emit for all proposals" do
+      @controller.send(:index_cache_key_for, nil, true).should == "proposals_index,all_proposals,admin_true"
+    end
+
+    it "should emit admin status" do
+      @controller.send(:index_cache_key_for, nil, false).should == "proposals_index,all_proposals,admin_false"
+    end
+  end
 end

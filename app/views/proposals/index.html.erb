@@ -1,6 +1,6 @@
 <% page_title "#{@event.title} proposals" %>
 
-<% cache_if(!logged_in?, "proposals_index_#{@event.id}") do %>
+<% cache("#{@cache_key}.html") do %>
   <div>
     <% if accepting_proposals? %>
       <p>

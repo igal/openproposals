@@ -1,11 +1,13 @@
-atom_feed do |feed|
-  feed.title("#{SETTINGS.organization}: Presentation Proposals")
-  feed.updated((@proposals.blank? ? Time.at(0) : @proposals.first.submitted_at))
+cache("#{@cache_key}.atom") do
+  atom_feed do |feed|
+    feed.title("#{SETTINGS.organization}: Presentation Proposals")
+    feed.updated((@proposals.blank? ? Time.at(0) : @proposals.first.submitted_at))
 
-  @proposals.each do |proposal|
-    feed.entry(proposal, :url => proposal_url(proposal)) do |entry|
-      entry.title(h proposal.title)
-      body = <<-HERE
+    @proposals[0..ProposalsController::MAX_FEED_ITEMS].each do |proposal|
+      feed.entry(proposal, :url => proposal_url(proposal)) do |entry|
+
+        entry.title(h proposal.title)
+        body = <<-HERE
 <p>
 <b>Presenter:</b> #{h proposal.presenter}
 </p>
@@ -17,13 +19,14 @@ atom_feed do |feed|
 <p>
 <b>Description:</b> #{preserve_formatting_of proposal.description}
 </p>
-      HERE
+        HERE
 
-      entry.content(body, :type => 'html')
+        entry.content(body, :type => 'html')
 
-      entry.author do |author|
-        author.name(proposal.presenter)
+        entry.author do |author|
+          author.name(proposal.presenter)
+        end
       end
     end
-  end
-end
+  end # atom_feed
+end # cache
