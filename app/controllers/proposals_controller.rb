@@ -70,7 +70,7 @@ class ProposalsController < ApplicationController
     add_breadcrumb @proposal.title, proposal_path(@proposal)
 
     @comment = Comment.new(:proposal => @proposal, :email => current_email)
-    @display_comment = ! params[:commented] && ! can_edit? && accepting_proposals?
+    @display_comment = ! params[:commented] && ! can_edit? && accepting_proposal_comments?
     @focus_comment = false
 
     respond_to do |format|
