@@ -280,6 +280,9 @@ div.record-controls {
   display: none;
 }
 
+.smaller {
+  font-size: 80%; }
+
 /*---[ submit a talk button ]-----------------------------------------*/
 
 /* FIXME how to automatically size width of the box? */
