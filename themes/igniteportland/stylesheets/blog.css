@@ -23,10 +23,12 @@ body {
 	border: none;
 	}
 	
+/* This tried even if overridden. WTF? -igal
 #header {
 	background: black url(/wp-content/themes/ignite-current/images/headers/ignite-header.jpg) !important;
 	height: 250px;
 	}
+*/
 
 #header h1, #header p.description {
 	display: none;

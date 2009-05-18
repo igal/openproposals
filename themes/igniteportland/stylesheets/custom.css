@@ -5,6 +5,7 @@
   width: 160px; }
 
 #header {
+  height: 250px;
   background-image: url('/themes/igniteportland/images/ignite-header.jpg');
   background: black url('/themes/igniteportland/images/ignite-header.jpg') repeat scroll 0 0 !important; }
 
