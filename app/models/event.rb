@@ -31,6 +31,15 @@ class Event < ActiveRecord::Base
     return Time.now < self.deadline
   end
 
+  # Return the event for a record.
+  def self.for_record(record)
+    case record
+    when Event then return record
+    when Proposal then return record.event
+    raise TypeError, "Unknown class: #{record.class.name}"
+    end
+  end
+
   EVENT_CURRENT_ID_SNIPPET = "event_current_id"
   EVENT_CURRENT_CACHE_KEY = "event_current"
 

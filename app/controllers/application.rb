@@ -83,12 +83,7 @@ protected
 
   # Is this event accepting proposals?
   def accepting_proposals?(record=nil)
-    event = \
-      case record
-      when Event then record
-      when Proposal then record.event
-      else nil
-      end
+    event = Event.for_record(record) rescue nil
 
     unless event
       if assign_current_event
