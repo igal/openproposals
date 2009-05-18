@@ -1,5 +1,5 @@
 # Local libraries
-require 'lib/ext_active_support_cache_filestore'
+require 'lib/ext/active_support_cache_filestore'
 
 # Local gems
 begin
