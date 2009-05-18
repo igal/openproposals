@@ -74,4 +74,15 @@ class Event < ActiveRecord::Base
       self.proposals
     end
   end
+
+  # Is the event currently accepting comments?
+  def accepting_proposal_comments?
+    return self.accepting_proposals? || self.accept_proposal_comments_after_deadline?
+  end
+
+  # Will event accept proposal comments after the deadline passes?
+  def accept_proposal_comments_after_deadline?
+    return self.read_attribute(:accept_proposal_comments_after_deadline) == true
+  end
+  alias_method :accept_proposal_comments_after_deadline, :accept_proposal_comments_after_deadline?
 end
