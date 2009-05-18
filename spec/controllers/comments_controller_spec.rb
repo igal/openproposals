@@ -129,6 +129,39 @@ describe CommentsController do
       assigns(:comment).should_not be_valid
     end
 
+    describe "with closed event" do
+      before(:each) do
+        @event = @proposal.event
+        @event.deadline = Time.now - 1.year
+        @event.save!
+
+        @email = "bubba@smith.com"
+        @message = "Yo"
+
+        @values = { :proposal_id => @proposal.id, :comment => { :email => @email, :message => @message, :proposal_id => @proposal.id } }
+      end
+
+      it "should reject comment if event is not accepting comments after deadline" do
+        @event.update_attribute(:accept_proposal_comments_after_deadline, false)
+
+        post :create, @values
+
+        flash.should have_key(:failure)
+        assigns(:comment).should be_nil
+        response.should redirect_to(proposal_url(@proposal))
+      end
+
+      it "should accept comment if event is accepting comments after deadline" do
+        @event.update_attribute(:accept_proposal_comments_after_deadline, true)
+
+        post :create, @values
+
+        flash.should_not have_key(:failure)
+        assigns(:comment).should be_valid
+        response.should redirect_to(proposal_url(@proposal, :commented => true))
+      end
+    end
+
     it "should create new comment" do
       email = "bubba@smith.com"
       message = "Yo"
