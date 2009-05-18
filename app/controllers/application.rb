@@ -98,6 +98,22 @@ protected
   end
   helper_method :accepting_proposals?
 
+  def accepting_proposal_comments?(record=nil)
+    event = Event.for_record(record) rescue nil
+
+    unless event
+      if assign_current_event
+        # An error or redirect was detected, therefore we're not accepting proposals
+        return false
+      else
+        event = @event
+      end
+    end
+
+    return event.accepting_proposal_comments?
+  end
+  helper_method :accepting_proposal_comments?
+
   #---[ Assign items ]----------------------------------------------------
 
   # Assign @event if it's not already set. Return true if redirected or failed,
