@@ -4,8 +4,9 @@
   <tr>
     <th>Id</th>
     <th>Title</th>
-    <th>Accepting?</th>
-    <th>Deadline</th>
+    <th width="0">Accepting proposals?</th>
+    <th width="0">Accepting comments?</th>
+    <th width="0">Deadline</th>
     <th>Manage</th>
   </tr>
 
@@ -19,12 +20,13 @@
 <% for event in @events %>
   <tr class="<%= cycle("even", "odd") %>">
     <td><%=h event.id %></td>
-    <td>
+    <td class="nowrap">
       <%= link_to h(event.title), [:manage, event] %>
     </td>
     <td><%=h event.accepting_proposals?.inspect %></td>
-    <td><%=h event.deadline %></td>
-    <td>
+    <td><%=h event.accepting_proposal_comments?.inspect %></td>
+    <td><%=h event.deadline.localtime.to_s(:db) %></td>
+    <td class="nowrap smaller">
       <%= link_to 'Show', manage_event_path(event), :class => "showable" %>
       <%= link_to 'Proposals', event_proposals_path(event), :class => "showable" %>
       <%= link_to 'Edit', edit_manage_event_path(event), :class => "editable" %>
