@@ -122,8 +122,10 @@
   .scaffolded dt {
     font-weight: bold; }
   .scaffolded td {
+    vertical-align: top;
     padding: 0.2em; }
   .scaffolded th {
+    vertical-align: top;
     padding: 0.25em;
     font-style: italic; }
 
