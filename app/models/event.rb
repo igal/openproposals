@@ -31,6 +31,15 @@ class Event < ActiveRecord::Base
     return Time.now < self.deadline
   end
 
+  # Return the event for a record.
+  def self.for_record(record)
+    case record
+    when Event then return record
+    when Proposal then return record.event
+    raise TypeError, "Unknown class: #{record.class.name}"
+    end
+  end
+
   EVENT_CURRENT_ID_SNIPPET = "event_current_id"
   EVENT_CURRENT_CACHE_KEY = "event_current"
 
@@ -74,4 +83,15 @@ class Event < ActiveRecord::Base
       self.proposals
     end
   end
+
+  # Is the event currently accepting comments?
+  def accepting_proposal_comments?
+    return self.accepting_proposals? || self.accept_proposal_comments_after_deadline?
+  end
+
+  # Will event accept proposal comments after the deadline passes?
+  def accept_proposal_comments_after_deadline?
+    return self.read_attribute(:accept_proposal_comments_after_deadline) == true
+  end
+  alias_method :accept_proposal_comments_after_deadline, :accept_proposal_comments_after_deadline?
 end

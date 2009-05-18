@@ -83,12 +83,7 @@ protected
 
   # Is this event accepting proposals?
   def accepting_proposals?(record=nil)
-    event = \
-      case record
-      when Event then record
-      when Proposal then record.event
-      else nil
-      end
+    event = Event.for_record(record) rescue nil
 
     unless event
       if assign_current_event
@@ -102,6 +97,22 @@ protected
     return event.accepting_proposals?
   end
   helper_method :accepting_proposals?
+
+  def accepting_proposal_comments?(record=nil)
+    event = Event.for_record(record) rescue nil
+
+    unless event
+      if assign_current_event
+        # An error or redirect was detected, therefore we're not accepting proposals
+        return false
+      else
+        event = @event
+      end
+    end
+
+    return event.accepting_proposal_comments?
+  end
+  helper_method :accepting_proposal_comments?
 
   #---[ Assign items ]----------------------------------------------------
 

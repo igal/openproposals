@@ -88,24 +88,17 @@ describe CommentsController do
   end
 
   describe "create" do
-    it "should reject comments from bots" do
-      post :create, :quagmire => "omg"
-
-      flash[:failure].should match(/robot/i)
-      response.should be_redirect
-    end
-
     it "should fail on empty comment" do
       email = "bubba@smith.com"
       message = "Yo"
       post :create
 
       flash.should have_key(:failure)
-      assigns(:comment).should_not be_valid
+      assigns(:comment).should be_nil
     end
 
     it "should fail on incomplete comment" do
-      post :create, :proposal_id => @proposal.id, :comment => {:email => "bubba@smith.com", :message => "", :proposal_id => @proposal.id,  }
+      post :create, :proposal_id => @proposal.id, :comment => {:email => "bubba@smith.com", :message => "", :proposal_id => @proposal.id }
 
       flash.should have_key(:failure)
       assigns(:comment).should_not be_valid
@@ -117,7 +110,7 @@ describe CommentsController do
       post :create, :comment => {:email => email, :message => message}
 
       flash.should have_key(:failure)
-      assigns(:comment).should_not be_valid
+      assigns(:comment).should be_nil
     end
 
     it "should fail on comment with invalid proposal" do
@@ -126,7 +119,47 @@ describe CommentsController do
       post :create, :proposal_id => -1, :comment => {:email => email, :message => message, :proposal_id => -1}
 
       flash.should have_key(:failure)
-      assigns(:comment).should_not be_valid
+      assigns(:comment).should be_nil
+    end
+
+    it "should reject comments from bots" do
+      post :create, :quagmire => "omg", :comment => {:email => "i@am.evil", :message => "Spam!", :proposal_id => @proposal.id }
+
+      flash[:failure].should match(/robot/i)
+      response.should be_redirect
+    end
+
+    describe "with closed event" do
+      before(:each) do
+        @event = @proposal.event
+        @event.deadline = Time.now - 1.year
+        @event.save!
+
+        @email = "bubba@smith.com"
+        @message = "Yo"
+
+        @values = { :proposal_id => @proposal.id, :comment => { :email => @email, :message => @message, :proposal_id => @proposal.id } }
+      end
+
+      it "should reject comment if event is not accepting comments after deadline" do
+        @event.update_attribute(:accept_proposal_comments_after_deadline, false)
+
+        post :create, @values
+
+        flash.should have_key(:failure)
+        assigns(:comment).should be_nil
+        response.should redirect_to(proposal_url(@proposal))
+      end
+
+      it "should accept comment if event is accepting comments after deadline" do
+        @event.update_attribute(:accept_proposal_comments_after_deadline, true)
+
+        post :create, @values
+
+        flash.should_not have_key(:failure)
+        assigns(:comment).should be_valid
+        response.should redirect_to(proposal_url(@proposal, :commented => true))
+      end
     end
 
     it "should create new comment" do

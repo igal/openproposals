@@ -122,8 +122,10 @@
   .scaffolded dt {
     font-weight: bold; }
   .scaffolded td {
+    vertical-align: top;
     padding: 0.2em; }
   .scaffolded th {
+    vertical-align: top;
     padding: 0.25em;
     font-style: italic; }
 
@@ -264,6 +266,9 @@ div.record-controls {
 	background: url('/images/feed.png') left center no-repeat;
 }
 
+.nowrap {
+  white-space: nowrap; }
+
 .snippet_edit_link {
   font-size: 0.8em;
   margin-left: 10px;
@@ -274,6 +279,9 @@ div.record-controls {
 .quagmire {
   display: none;
 }
+
+.smaller {
+  font-size: 80%; }
 
 /*---[ submit a talk button ]-----------------------------------------*/
 

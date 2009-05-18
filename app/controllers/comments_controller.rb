@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
 
   MAX_FEED_ITEMS = 50
 
-  before_filter :require_admin, :except => [:index, :create]
+  before_filter :assert_accepting_comments, :only => [:create]
+  before_filter :require_admin, :only => [:destroy] # :index handles its own authorization
 
   def index
     @comments = Comment.listable
@@ -35,11 +36,6 @@ class CommentsController < ApplicationController
     end
 
     @comment = Comment.new(params[:comment])
-    unless @comment.proposal_id
-      flash[:failure] = "Can't add comment to non-existant proposal"
-      redirect_to(:back) rescue redirect_to(events_url)
-      return
-    end
 
     # Use session to store email address and prefill it as needed
     if @comment.email.blank?
@@ -57,13 +53,8 @@ class CommentsController < ApplicationController
       else
         @display_comment = true
         @focus_comment = true
-        if @proposal = @comment.proposal
-          flash[:failure] = "Invalid comment."
-        else
-          flash[:failure] = "Can't add comment to invalid proposal."
-          flash.keep
-          return redirect_to(proposals_path)
-        end
+        @proposal = @comment.proposal
+        flash[:failure] = "Invalid comment."
         format.html { render :template => "proposals/show" }
         format.xml  { render :xml  => @comment.errors, :status => :unprocessable_entity }
         format.json { render :json => @comment.errors, :status => :unprocessable_entity }
@@ -82,4 +73,24 @@ class CommentsController < ApplicationController
       }
     end
   end
+
+protected
+
+  def assert_accepting_comments
+    proposal_id = params[:comment].ergo[:proposal_id]
+    if proposal = Proposal.find(proposal_id) rescue nil
+      if admin? || (proposal.event && proposal.event.accepting_proposal_comments?)
+        return false # Allow
+      else
+        flash[:failure] = "Comments are no longer being accepted for this event."
+      end
+    else
+      flash[:failure] = "Couldn't find the proposal you're trying to comment on, it may have been deleted."
+    end
+
+    flash.keep
+    redirect_to(:back) rescue redirect_to(proposal_id ? proposal_path(proposal_id) : events_url)
+    return true # Disallow
+  end
+
 end

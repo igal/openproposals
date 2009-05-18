@@ -37,6 +37,16 @@
     </tr>
     <tr>
       <td class="label-cell">
+        <%= f.label :accept_proposal_comments_after_deadline, "Proposal comments" %><br />
+      </td>
+      <td>
+        <%= f.radio_button :accept_proposal_comments_after_deadline, false %>&nbsp;<%= f.label :accept_proposal_comments_after_deadline_false, "Stop accepting proposal comments after deadline (default)" %>
+        <br />
+        <%= f.radio_button :accept_proposal_comments_after_deadline, true %>&nbsp;<%= f.label :accept_proposal_comments_after_deadline_true, "Continue accepting proposal comments after deadline" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label-cell">
         <%= f.label :open_text %><br />
       </td>
       <td>
