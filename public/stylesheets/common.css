@@ -264,6 +264,9 @@ div.record-controls {
 	background: url('/images/feed.png') left center no-repeat;
 }
 
+.nowrap {
+  white-space: nowrap; }
+
 .snippet_edit_link {
   font-size: 0.8em;
   margin-left: 10px;
