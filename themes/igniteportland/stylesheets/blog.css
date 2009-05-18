@@ -1,0 +1,100 @@
+/*
+Theme Name: Ignite Portland for 2.7
+Theme URI: http://igniteportland.com
+Description: <strong><a href="themes.php?page=k2-options">Configure K2</a></strong> or visit the <a href="http://getk2.com/forum/">support forums</a>, <a href="http://k2.stikipad.com/">the wiki</a> or <a href="http://code.google.com/p/kaytwo/issues/list">the bug tracker</a>. K2 was developed by <a href="http://binarybonsai.com/">Michael</a>, <a href="http://chrisjdavis.org/">Chris</a>, <a href="http://zeo.unic.net.my/">Zeo</a>, <a href="http://stevelam.org/">Steve</a> and Ben, and is licensed under the <a href="http://www.opensource.org/licenses/gpl-license.php">GPL</a>.
+Version: Based on RC 7
+Author: Various Artists
+Author URI: http://getk2.com/
+Template: k2
+
+CSS Documentation: http://k2.stikipad.com/docs/show/CSS+Overview
+*/
+
+@import url('css/core.css.php');
+
+/* Learn more about the other K2: http://en.wikipedia.org/wiki/K2 */
+
+body {
+	background: black;
+	}
+
+#page {
+	padding-top: 0;
+	border: none;
+	}
+	
+#header {
+	background: black url(/wp-content/themes/ignite-current/images/headers/ignite-header.jpg) !important;
+	height: 250px;
+	}
+
+#header h1, #header p.description {
+	display: none;
+	}
+
+.content {
+	background: white url(http://www.igniteportland.com.previewdns.com/wp-content/themes/k2/images/corners.gif) no-repeat scroll left top;
+	padding: 0px 20px;
+	}
+
+ul.menu {
+	width: 910px;
+	text-align: center;
+	}
+
+ul.menu li a {
+	color: #ccc;
+	font-size: 1.2em;
+	margin: 0px;
+	}
+
+#recently ul li a {
+	display: block;
+	border-bottom: 1px dotted #ccc;
+	padding: 5px;
+	}
+#responses ul li {
+	border-bottom: 1px dotted #ccc;
+	padding: 5px;
+	}
+#recently ul li a:hover {
+	background: #F9F39C;
+	text-decoration: none !important;
+	}
+#text-333495082 ul li a {
+	display: block;
+	border-bottom: 1px dotted #ccc;
+	padding: 14px 5px 5px 45px;
+	font-size: 1.4em;
+	height: 25px;
+	}
+#text-333495082 ul li.rss-icon a {
+	background: transparent url('images/rss-icon.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.rss-icon a:hover {
+	background: #F9F39C url('images/rss-icon.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.technorati-icon a {
+	background: transparent url('images/technorati.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.technorati-icon a:hover {
+	background: #F9F39C url('images/technorati.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.facebook-icon a {
+	background: transparent url('images/facebook.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.facebook-icon a:hover {
+	background: #F9F39C url('images/facebook.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.flickr-icon a {
+	background: transparent url('images/flickr.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.flickr-icon a:hover {
+	background: #F9F39C url('images/flickr.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.twitter-icon a {
+	background: transparent url('images/twitter.gif') 5px 5px no-repeat;
+	}
+#text-333495082 ul li.twitter-icon a:hover {
+	background: #F9F39C url('images/twitter.gif') 5px 5px no-repeat;
+	}
