@@ -18,11 +18,14 @@ class ProposalsController < ApplicationController
     else
       return if assign_current_event
     end
-    @proposals = @event ? @event.lookup_proposals : Proposal.lookup
+
+    @proposals = Defer { @event ? @event.lookup_proposals : Proposal.lookup }
+    @cache_key = index_cache_key_for(@event, admin?)
 
     respond_to do |format|
       format.html {
         add_breadcrumb_for_event
+        # index.html.erb
       }
       format.xml  {
         render :xml => @proposals.map(&:public_attributes)
@@ -31,7 +34,7 @@ class ProposalsController < ApplicationController
         render :json => @proposals.map(&:public_attributes)
       }
       format.atom {
-        @proposals = @proposals[0..MAX_FEED_ITEMS]
+        # index.atom.builder
       }
       format.csv {
         buffer = StringIO.new
@@ -219,6 +222,20 @@ protected
 
   def add_breadcrumb_for_event
     add_breadcrumb "#{@event.title} proposals", event_proposals_path(@event) if @event
+  end
+
+  # Return string to use as fragment cache key for the #index action.
+  #
+  # Arguments:
+  # * event => An Event instance or nil.
+  # * is_admin => Does the current user have admin privileges?
+  def index_cache_key_for(event, is_admin)
+    s = "proposals_index,"
+    s << (event \
+      ? "event_#{event.id},accepting_#{event.accepting_proposals?}" \
+      : "all_proposals")
+    s << ",admin_#{is_admin}"
+    return s
   end
 
 end
