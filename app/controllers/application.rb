@@ -26,8 +26,10 @@ class ApplicationController < ActionController::Base
   layout "application"
   theme THEME_NAME # DEPENDENCY: lib/theme_reader.rb
 
-  # Make sure @event is always assigned
+  # Filters
   before_filter :assign_events
+  before_filter :log_the_current_user
+  before_filter :log_the_session
 
 protected
 
@@ -114,6 +116,16 @@ protected
     return event.accepting_proposal_comments?
   end
   helper_method :accepting_proposal_comments?
+
+  #---[ Logging ]---------------------------------------------------------
+
+  def log_the_current_user
+    Rails.logger.info("User: #{current_user.id}, #{current_user.label}") if current_user_or_nil
+  end
+
+  def log_the_session
+    Rails.logger.info("Session: #{session.data.inspect}") if session.respond_to?(:data)
+  end
 
   #---[ Assign items ]----------------------------------------------------
 
