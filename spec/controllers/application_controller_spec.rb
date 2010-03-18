@@ -7,6 +7,11 @@ describe ApplicationController do
     return @controller.send(:can_edit?, *args)
   end
 
+  before(:each) do
+    # Provide a dummy request, needed by the access control checks
+    @controller.request = @request
+  end
+
   describe "can_edit?" do
     describe "users" do
       it "should allow user to edit own" do
@@ -49,6 +54,7 @@ describe ApplicationController do
     end
 
     it "should not allow anonymous to edit anything" do
+      login_as nil
       can_edit?(Proposal.find(:first)).should be_false
     end
 

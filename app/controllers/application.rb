@@ -26,17 +26,20 @@ class ApplicationController < ActionController::Base
   layout "application"
   theme THEME_NAME # DEPENDENCY: lib/theme_reader.rb
 
-  # Make sure @event is always assigned
+  # Filters
   before_filter :assign_events
+  before_filter :log_the_current_user
+  before_filter :log_the_session
 
 protected
 
   #---[ General ]---------------------------------------------------------
 
-  # Assign an @events variable for use by the layout when displaying available events.
-  def assign_events
-    @events = Event.lookup || []
+  # Return the current User record or a nil if not logged in.
+  def current_user_or_nil
+    return(current_user.kind_of?(User) ? current_user : nil)
   end
+  helper_method :current_user_or_nil
 
   # Return the current_user's email address
   def current_email
@@ -114,7 +117,22 @@ protected
   end
   helper_method :accepting_proposal_comments?
 
+  #---[ Logging ]---------------------------------------------------------
+
+  def log_the_current_user
+    Rails.logger.info("User: #{current_user.id}, #{current_user.label}") if current_user_or_nil
+  end
+
+  def log_the_session
+    Rails.logger.info("Session: #{session.data.inspect}") if session.respond_to?(:data)
+  end
+
   #---[ Assign items ]----------------------------------------------------
+
+  # Assign an @events variable for use by the layout when displaying available events.
+  def assign_events
+    @events = Event.lookup || []
+  end
 
   # Assign @event if it's not already set. Return true if redirected or failed,
   # false if assigned event for normal processing. WARNING: performs redirects
