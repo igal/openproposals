@@ -33,11 +33,6 @@ protected
 
   #---[ General ]---------------------------------------------------------
 
-  # Assign an @events variable for use by the layout when displaying available events.
-  def assign_events
-    @events = Event.lookup || []
-  end
-
   # Return the current_user's email address
   def current_email
     (current_user != :false ? current_user.email : nil) || session[:email]
@@ -115,6 +110,11 @@ protected
   helper_method :accepting_proposal_comments?
 
   #---[ Assign items ]----------------------------------------------------
+
+  # Assign an @events variable for use by the layout when displaying available events.
+  def assign_events
+    @events = Event.lookup || []
+  end
 
   # Assign @event if it's not already set. Return true if redirected or failed,
   # false if assigned event for normal processing. WARNING: performs redirects
