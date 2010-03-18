@@ -56,21 +56,29 @@
 #     <%= @records.size %>
 #   <% end %>
 class DeferProxy
-  attr_accessor :__called
-  attr_accessor :__callback
-  attr_accessor :__value
+  # In order to proxy the most methods, remove this object's instance methods
+  # so that calls will be sent to #method_missing for forwarding.
+  instance_methods.each { |m| undef_method(m) unless m =~ /^__/ }
 
+  # Create proxy that, when called, will return a value by callling the block.
   def initialize(&block)
-    @__callback = block
+    @__defer_proxy_callback = block
   end
 
-  def method_missing(method, *args, &block)
-    unless @__called
-      @__value = @__callback.call
-      @__called = true
-      Rails.logger.debug("DeferProxy materialized by: #{@__value.class.name}##{method}") if defined?(Rails)
-    end
-    return @__value.send(method, *args, &block)
+  # Return true if asked if this is a kind of DeferProxy else fallback to
+  # +kind_of?+ behavior of proxied object.
+  def kind_of?(klass)
+    return(klass == DeferProxy || method_missing(:kind_of?, klass))
+  end
+
+  # Materialize the proxied object and call it.
+  def method_missing(name, *args, &block)
+    return(__materialize.send(name, *args, &block))
+  end
+
+  # Return the proxied object, materializing it if needed.
+  def __materialize(*args, &block)
+    return(@__defer_proxy_value ||= @__defer_proxy_callback.call(*args, &block))
   end
 end
 
@@ -79,9 +87,41 @@ def Defer(&block)
   return DeferProxy.new(&block)
 end
 
-__END__
+# Return the content of a value, be it a Defer or not.
+def Undefer(value)
+  return value.kind_of?(DeferProxy) ? value.__materialize : value
+end
 
-# Test
-load 'lib/defer_proxy.rb'
-x = Defer { [1,2,3] }
-x.each{|v| p v}
+# Self-test
+if __FILE__ == $0
+  require 'test/unit'
+  class DeferProxyTest < Test::Unit::TestCase
+    def test_should_proxy_an_integer
+      assert_equal(1, Defer{1})
+    end
+
+    def test_should_proxy_an_array
+      assert_equal([1,2,3], Defer{[1,2,3]}.map{|t| t})
+    end
+
+    def test_should_proxy_an_array_for_use_with_map
+      assert_equal([1,2,3], Defer{[1,2,3]}.map{|t| t})
+    end
+
+    def test_should_be_able_to_use_kind_of_on_proxied_object
+      assert(Defer{[1,2,3]}.kind_of?(Array))
+    end
+
+    def test_should_be_able_to_use_kind_of_on_self
+      assert(Defer{[1,2,3]}.kind_of?(DeferProxy))
+    end
+
+    def test_should_provide_access_to_proxied_object
+      assert_equal([1,2,3], Undefer(Defer{[1,2,3]}))
+    end
+
+    def test_should_provide_access_to_proxied_object_thats_not_a_defer
+      assert(Undefer(Defer{[1,2,3]}).respond_to?(:__materialize) == false)
+    end
+  end
+end
