@@ -9,6 +9,7 @@ require 'fileutils'
 require 'rubygems'
 
 # Facets
+# NOTE: Facets 2.8.4 is the last version to include the dictionary class
 require 'facets/dictionary'
 require 'facets/enumerable/mash'
 require 'facets/file/write'
