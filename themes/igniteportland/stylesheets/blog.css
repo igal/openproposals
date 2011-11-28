@@ -23,19 +23,18 @@ body {
 	border: none;
 	}
 	
-/* This tried even if overridden. WTF? -igal
 #header {
-	background: black url(/wp-content/themes/ignite-current/images/headers/ignite-header.jpg) !important;
-	height: 250px;
+	/*background: black url(http://igniteportland.com/files/2009/02/cropped-ignite-headerjpg.jpg/) !important;
+	height: 250px;*/
+	background-color: black;
 	}
-*/
 
 #header h1, #header p.description {
 	display: none;
 	}
 
 .content {
-	background: white;
+	background: white url(http://igniteportland.org/wp-content/themes/ignite/images/corners.gif) no-repeat scroll left top;
 	padding: 0px 20px;
 	}
 
@@ -63,40 +62,40 @@ ul.menu li a {
 	background: #F9F39C;
 	text-decoration: none !important;
 	}
-#text-333495082 ul li a {
+ul.follow_us li a {
 	display: block;
 	border-bottom: 1px dotted #ccc;
 	padding: 14px 5px 5px 45px;
 	font-size: 1.4em;
 	height: 25px;
 	}
-#text-333495082 ul li.rss-icon a {
+ul.follow_us li.rss-icon a {
 	background: transparent url('images/rss-icon.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.rss-icon a:hover {
+ul.follow_us li.rss-icon a:hover {
 	background: #F9F39C url('images/rss-icon.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.technorati-icon a {
+ul.follow_us li.technorati-icon a {
 	background: transparent url('images/technorati.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.technorati-icon a:hover {
+ul.follow_us li.technorati-icon a:hover {
 	background: #F9F39C url('images/technorati.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.facebook-icon a {
+ul.follow_us li.facebook-icon a {
 	background: transparent url('images/facebook.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.facebook-icon a:hover {
+ul.follow_us li.facebook-icon a:hover {
 	background: #F9F39C url('images/facebook.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.flickr-icon a {
+ul.follow_us li.flickr-icon a {
 	background: transparent url('images/flickr.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.flickr-icon a:hover {
+ul.follow_us li.flickr-icon a:hover {
 	background: #F9F39C url('images/flickr.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.twitter-icon a {
+ul.follow_us li.twitter-icon a {
 	background: transparent url('images/twitter.gif') 5px 5px no-repeat;
 	}
-#text-333495082 ul li.twitter-icon a:hover {
+ul.follow_us li.twitter-icon a:hover {
 	background: #F9F39C url('images/twitter.gif') 5px 5px no-repeat;
 	}
