@@ -64,19 +64,45 @@ namespace :deploy do
     put File.read("config/secrets.yml"), "#{shared_path}/config/secrets.yml", :mode => 0664
   end
 
-  desc "Generate database.yml"
-  task :database_yml do
-    run %{ruby -p -i.bak -e '$_.gsub!(%r{database: db/}, "database: #{shared_path}/db/")' #{current_path}/config/database.yml}
-  end
+  desc "Finish update"
+  task :finish do
+    # Gems
+    run "cd #{release_path} && (bundle check --path=../../shared/gems || bundle --without=development:test --path=../../shared/gems)"
 
-  desc "Set the application's secrets"
-  task :secrets_yml do
-    run "ln -nsf #{shared_path}/config/secrets.yml #{current_path}/config/secrets.yml"
-  end
+    # Theme
+    put theme, "#{release_path}/config/theme.txt"
 
-  desc "Set the application's theme"
-  task :theme_txt do
-    run "echo #{theme} > #{current_path}/config/theme.txt"
+    # Secrets
+    source = "#{shared_path}/config/secrets.yml"
+    target = "#{release_path}/config/secrets.yml"
+    begin
+      run %{if test ! -f #{source}; then exit 1; fi}
+      run %{ln -nsf #{source} #{target}}
+    rescue Exception => e
+      puts <<-HERE
+ERROR!  You must have a file on your server to store secret information.
+        See the "config/secrets.yml.sample" file for details on this.
+        You will need to upload your completed file to your server at:
+            #{source}
+      HERE
+      raise e
+    end
+
+    # Database
+    source = "#{shared_path}/config/database.yml"
+    target = "#{release_path}/config/database.yml"
+    begin
+      run %{if test ! -f #{source}; then exit 1; fi}
+      run %{ln -nsf #{source} #{target}}
+    rescue Exception => e
+      puts <<-HERE
+ERROR!  You must have a file on your server with the database configuration.
+        This file must contain absolute paths if you're using SQLite.
+        You will need to upload your completed file to your server at:
+            #{source}
+      HERE
+      raise e
+    end
   end
 
   desc "Clear the application's cache"
@@ -85,12 +111,8 @@ namespace :deploy do
   end
 end
 
-# After setup
+# Hooks
 after "deploy:setup", "deploy:prepare_shared"
 after "deploy:setup", "deploy:upload_secrets_yml"
-
-# After symlink
-after "deploy:symlink", "deploy:database_yml"
-after "deploy:symlink", "deploy:secrets_yml"
-after "deploy:symlink", "deploy:theme_txt"
+after "deploy:finalize_update", "deploy:finish"
 after "deploy:symlink", "deploy:clear_cache"
