@@ -4,7 +4,7 @@ set :scm, "git"
 set :repository,  "git@github.com:igal/openproposals.git"
 set :branch, "master"
 set :deploy_to, "/var/www/ignite-proposals"
-set :user, "igal"
+set :user, "igniteportland"
 set :host, "sumomo"
 
 set :deploy_via, :remote_cache
