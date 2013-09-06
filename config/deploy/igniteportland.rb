@@ -5,7 +5,7 @@ set :repository,  "git@github.com:igal/openproposals.git"
 set :branch, "master"
 set :deploy_to, "/var/www/ignite-proposals"
 set :user, "igniteportland"
-set :host, "sumomo"
+set :host, "sumomo.koshevoy.net"
 
 set :deploy_via, :remote_cache
 role :app, host
