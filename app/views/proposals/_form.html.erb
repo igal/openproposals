@@ -5,6 +5,11 @@
   <% end %>
 </p>
 
+<% if !logged_in? && @proposal.new_record? %>
+  <p><%= snippet_for :proposals_openid_text %></p>
+  <%= render :partial => 'sessions/openid_form', :locals => {:return_to => new_event_proposal_path(@event)} %>
+<% end %>
+
 <div id="proposal-form" class="standard-form">
   <% form_for([@event, @proposal]) do |f| %>
     <table>
@@ -18,34 +23,6 @@
         </thead>
       <% end %>
       <tbody>
-<% if !logged_in? && @proposal.new_record? %>
-        <tr>
-          <td colspan="2">
-            <h4>Login with OpenID</h4>
-            <p><%= snippet_for :proposals_openid_text %></p>
-          </td>
-        </tr>
-        <tr>
-          <td class="label-cell">
-            <%= image_tag "openid-icon.gif" %>
-            OpenID
-          </td>
-          <td>
-            <%= text_field_tag :openid_url, "" %>
-            <%= submit_tag "Login", :id => "openid_login" %>
-            <!-- BEGIN ID SELECTOR -->
-            <script type="text/javascript">
-              <!--
-                  // Tell ID Selector which controls to affect
-                  var idselector_input_id = "openid_url";
-                  var idselector_target_id = "openid_login_wtf";
-                -->
-            </script>
-            <%= javascript_include_tag "idselector" %>
-            <!-- END ID SELECTOR -->
-          </td>
-        </tr>
-<% end %>
         <tr>
           <td colspan="2">
             <h4>About you</h4>

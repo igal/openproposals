@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
   # Process login
   def create
+    store_location(params[:return_to]) if params[:return_to]
     if using_open_id?
       open_id_authentication
     else

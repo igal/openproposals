@@ -1,0 +1,38 @@
+<% return_to ||= nil %>
+<% form_tag(session_path, :id => "openid_form", :class => "standard-form") do %>
+  <% if return_to %>
+    <%= hidden_field_tag :return_to, return_to %>
+  <% end %>
+  <fieldset>
+    <div id="openid_choice">
+      <p>Please click your account provider:</p>
+      <div id="openid_btns"></div>
+    </div>
+    <div id="openid_input_area">
+      <%= text_field_tag "openid_url", "http://", :id => "openid_url" %>
+      <%= submit_tag 'Log in' %>
+    </div>
+    <noscript>
+      <p>OpenID is service that allows you to log-on to many different websites using a single indentity.
+      Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+    </noscript>
+  </fieldset>
+  <p>
+    <span class="rightish">
+      &nbsp;
+    </span>
+    &nbsp;
+    <!-- BEGIN ID SELECTOR -->
+    <%= stylesheet_link_tag "openid" %>
+    <%= javascript_include_tag "jquery-1.2.6.min" %>
+    <%= javascript_include_tag "openid-jquery" %>
+    <%= javascript_include_tag "openid-en" %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        openid.img_path = '/images/';
+        openid.init('openid_url');
+      });
+    </script>
+    <!-- END ID SELECTOR -->
+  </p>
+<% end %>

@@ -271,13 +271,6 @@ describe ProposalsController, "when displaying events" do
       @record = nil
     end
 
-    it "should redirect on login" do
-      assert_create(nil, :event_id => @current_event.id, :commit => 'Login', :openid_url => 'http://foo.bar') do
-        response.should be_redirect
-        assigns(:proposal).should be_blank
-      end
-    end
-
     it "should create proposal for anonymous user" do
       assert_create(nil, :event_id => @current_event.id, :proposal => @inputs) do
         response.should be_redirect
